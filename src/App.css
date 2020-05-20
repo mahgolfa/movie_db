@@ -1,6 +1,16 @@
 .App {
   text-align: center;
+  height: 700px;
+  width: 100%;
+  display: flex;
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
+
 
 .App-logo {
   height: 40vmin;

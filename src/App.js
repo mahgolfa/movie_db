@@ -1,23 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Movie from "./Components/Movie";
 
 const axios = require('axios').default;
 
 class App extends React.Component {
     state = {
-        movie: undefined
+        movie: {
+            backdrop_path: '/rAiYTfKGqDCRIIqo664sY9XZIvQ.jpg'
+        }
     };
 
-    componentDidMount() {
-        this.getMoviesList('a')
+    componentWillMount() {
+        this.getMoviesList('interstellar')
     }
 
     getMoviesList(searchText) {
         axios.get('https://api.themoviedb.org/3/search/movie?api_key=58f5191ea5d531ac90bb1fcc2d1119de&query=' + searchText)
             .then( (response) => {
                 this.setState({movie: response.data.results[0]});
-                console.log(this.state.movie);
+                console.log(this.state.movie)
             })
             .catch( (error) => {
                 console.log(error);
@@ -27,10 +29,13 @@ class App extends React.Component {
     }
 
     render() {
+        const {movie} = this.state;
+
         return (
-            <div className="App">
-                <header className="App-header">
-                </header>
+            <div className="App" style={{
+                backgroundImage: `linear-gradient(to right, rgba(9, 66, 59, 0.5) 0%, rgba(9, 28, 37, 0.5) 100%),url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`,
+            }}>
+                <Movie movie={movie}/>
             </div>
         );
     }
