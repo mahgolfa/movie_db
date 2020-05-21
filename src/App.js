@@ -7,12 +7,14 @@ const axios = require('axios').default;
 class App extends React.Component {
     state = {
         movie: {
-            backdrop_path: '/rAiYTfKGqDCRIIqo664sY9XZIvQ.jpg'
+            backdrop_path: '',
+            production_companies:[],
+            genres:[]
         }
     };
 
     componentWillMount() {
-        this.getMoviesList('interstellar')
+        this.getMovieDetails(127585)
     }
 
     getMoviesList(searchText) {
@@ -28,11 +30,23 @@ class App extends React.Component {
             });
     }
 
+    getMovieDetails(id){
+        axios.get('https://api.themoviedb.org/3/movie/'+ id + '?api_key=58f5191ea5d531ac90bb1fcc2d1119de')
+            .then( (response) => {
+                this.setState({movie:response.data})
+                console.log(this.state.movie)
+            })
+            .catch( (error) => {
+                console.log(error);
+            })
+            .finally( () =>{
+            });
+    }
     render() {
         const {movie} = this.state;
 
         return (
-            <div className="App" style={{
+            <div className="App" style={{ flex:1,
                 backgroundImage: `linear-gradient(to right, rgba(9, 66, 59, 0.5) 0%, rgba(9, 28, 37, 0.5) 100%),url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`,
             }}>
                 <Movie movie={movie}/>

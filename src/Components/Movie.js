@@ -1,11 +1,24 @@
 import React from 'react'
+import Cover from "./Cover";
+import Description from "./Description";
 
 const Movie = ({movie}) => {
+    const {
+        title, runtime, revenue,
+        overview, release_date, poster_path,vote_average,genres,production_companies
+    } = movie;
     return (
-        <div style={{flexDirection:'row', position:'center',}}>
-            <img src={`https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie.poster_path}`} alt=""
-                 style={{backgroundColor: 'grey',}}/>
-
+        <div className={"row"}>
+            <Cover posterPath={poster_path}/>
+            <Description title={title}
+                         runtime={runtime}
+                         revenue={revenue}
+                         overview={overview}
+                         releaseDate={release_date}
+                         voteAverage={vote_average}
+                         genres={genres}
+                         productionCompanies={production_companies}
+                  />
         </div>
     );
 };
