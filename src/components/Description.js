@@ -22,12 +22,12 @@ const Description = ({
                     .join(", ")}
             </p>
             <div className={"row"}>
-                <span style={{flex: 1}}>
+                <span className={"flexed-column"}>
             <p className={"strong"}>Original Release:</p>
             <p className="movieDescription__information">
                 {releaseDate}
             </p>
-                </span><span style={{flex: 1}}>
+                </span><span className={"flexed-column"}>
                 <p className={"strong"}>Running Time:</p>
                 <p className="movieDescription__information">
                     {runtime} minutes
@@ -35,15 +35,15 @@ const Description = ({
             </span>
             </div>
             <div className={"row"}>
-                <span style={{flex: 1}}>
+                <span className={"flexed-column"}>
             <p className={"strong"} >Box Office:</p>
             <p className="movieDescription__information">
                 {revenue > 0 ? revenue.toLocaleString() : "Unknown"}
             </p>
-                </span><span style={{flex: 1}}>
+                </span><span className={"flexed-column"}>
                 <p className={"strong"}>Vote Average:</p>
                 <p className="movieDescription__information">
-                    {voteAverage} / 10
+                    {voteAverage > 0 ? voteAverage + ' / 10'  : "Unknown"}
                 </p>
             </span>
             </div>
