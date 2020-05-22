@@ -5,7 +5,7 @@ import Description from "./Description";
 const Movie = ({movie}) => {
     const {
         title, runtime, revenue,
-        overview, release_date, poster_path,vote_average,genres,production_companies
+        overview, release_date, poster_path,vote_average,genres,production_companies,tagline
     } = movie;
     return (
         <div className={"row"}>
@@ -18,6 +18,7 @@ const Movie = ({movie}) => {
                          voteAverage={vote_average}
                          genres={genres}
                          productionCompanies={production_companies}
+                         tagline={tagline}
                   />
         </div>
     );

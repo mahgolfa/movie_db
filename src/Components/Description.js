@@ -2,11 +2,14 @@ import React from 'react'
 
 const Description = ({
                          title, runtime, revenue,
-                         overview, releaseDate, voteAverage, genres, productionCompanies
+                         overview, releaseDate, voteAverage, genres, productionCompanies,tagline
                      }) => {
     return (
         <div className={"movieDescription"}>
             <h1  className={"h1"}>{title}</h1>
+            <p className="movieDescription__information">
+                {tagline}
+            </p>
             <p className={"strong"} style={{marginBottom: 30}}>{overview}</p>
             <p className="movieDescription__information">
                 {genres
