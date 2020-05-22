@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import Movie from "./Components/Movie";
+import ReactSearchBox from 'react-search-box'
 
 const axios = require('axios').default;
 
@@ -10,24 +11,27 @@ class App extends React.Component {
             backdrop_path: '',
             production_companies:[],
             genres:[]
-        }
+        },
+        list: []
     };
 
     componentWillMount() {
+        //sample movie : X Men
         this.getMovieDetails(127585)
     }
 
     getMoviesList(searchText) {
         axios.get('https://api.themoviedb.org/3/search/movie?api_key=58f5191ea5d531ac90bb1fcc2d1119de&query=' + searchText)
             .then( (response) => {
-                this.setState({movie: response.data.results[0]});
-                console.log(this.state.movie)
+                this.setState({
+                    list: response.data.results.map(item => ({
+                        key: item.id, value: item.title
+                    }))
+                });
             })
             .catch( (error) => {
                 console.log(error);
             })
-            .finally( () =>{
-            });
     }
 
     getMovieDetails(id){
@@ -39,16 +43,19 @@ class App extends React.Component {
             .catch( (error) => {
                 console.log(error);
             })
-            .finally( () =>{
-            });
     }
     render() {
-        const {movie} = this.state;
-
+        const {movie, list} = this.state;
         return (
             <div className="App" style={{ flex:1,
                 backgroundImage: `linear-gradient(to right, rgba(9, 66, 59, 0.5) 0%, rgba(9, 28, 37, 0.5) 100%),url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`,
             }}>
+                <ReactSearchBox
+                    placeholder="Search Movie Title..."
+                    data={list}
+                    onChange={text => this.getMoviesList(text)}
+                    onSelect={record => this.getMovieDetails(record.key)}
+                />
                 <Movie movie={movie}/>
             </div>
         );
