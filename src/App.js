@@ -1,7 +1,8 @@
 import React from 'react';
-import './App.css';
-import Movie from "./Components/Movie";
+import './styles/App.css';
+import Movie from "./components/Movie";
 import ReactSearchBox from 'react-search-box'
+import ApiConfig from 'services/config'
 
 const axios = require('axios').default;
 
@@ -12,7 +13,7 @@ class App extends React.Component {
             production_companies:[],
             genres:[]
         },
-        list: []
+        list: [],
     };
 
     componentWillMount() {
@@ -21,7 +22,7 @@ class App extends React.Component {
     }
 
     getMoviesList(searchText) {
-        axios.get('https://api.themoviedb.org/3/search/movie?api_key=58f5191ea5d531ac90bb1fcc2d1119de&query=' + searchText)
+        axios.get(ApiConfig.BASE_URL + '/search/movie' + ApiConfig.KEY + '&query=' + searchText)
             .then( (response) => {
                 this.setState({
                     list: response.data.results.map(item => ({
@@ -35,7 +36,7 @@ class App extends React.Component {
     }
 
     getMovieDetails(id){
-        axios.get('https://api.themoviedb.org/3/movie/'+ id + '?api_key=58f5191ea5d531ac90bb1fcc2d1119de')
+        axios.get(ApiConfig.BASE_URL + '/movie/' + id + ApiConfig.KEY)
             .then( (response) => {
                 this.setState({movie:response.data})
                 console.log(this.state.movie)
@@ -50,12 +51,14 @@ class App extends React.Component {
             <div className="App" style={{ flex:1,
                 backgroundImage: `linear-gradient(to right, rgba(9, 66, 59, 0.5) 0%, rgba(9, 28, 37, 0.5) 100%),url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`,
             }}>
-                <ReactSearchBox
-                    placeholder="Search Movie Title..."
-                    data={list}
-                    onChange={text => this.getMoviesList(text)}
-                    onSelect={record => this.getMovieDetails(record.key)}
-                />
+                <div className="searchBox__container">
+                    <ReactSearchBox
+                        placeholder="Search Movie Title..."
+                        data={list}
+                        onChange={text => this.getMoviesList(text)}
+                        onSelect={record => this.getMovieDetails(record.key)}
+                    />
+                </div>
                 <Movie movie={movie}/>
             </div>
         );
